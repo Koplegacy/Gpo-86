@@ -4,14 +4,14 @@ from tkinter import messagebox
 
 
 
-# Función para mostrar las sugerencias en la lista desplegable
+Función para mostrar las sugerencias en la lista desplegable
 def mostrar_sugerencias(sugerencias):
     lista_sugerencias.delete(0, tk.END)  # Limpiar lista antes de agregar nuevas sugerencias
     for sugerencia in sugerencias:
         lista_sugerencias.insert(tk.END, sugerencia)
     lista_sugerencias.pack()  # Mostrar la lista de sugerencias
     
-# Función para obtener sugerencias de países en español
+Función para obtener sugerencias de países en español
 def actualizar_sugerencias(event):
     pais = entrada_pais.get().strip()
     if len(pais) < 2:  # Esperar hasta que el usuario haya escrito al menos 2 letras
@@ -34,7 +34,7 @@ def actualizar_sugerencias(event):
     except requests.exceptions.RequestException:
         lista_sugerencias.pack_forget()  # Ocultar lista en caso de error
 
-# Función para obtener información detallada de un país en español
+Función para obtener información detallada de un país en español
 def buscar_pais(pais=None):
     pais = pais or entrada_pais.get().strip()
     if not pais:
@@ -52,8 +52,7 @@ def buscar_pais(pais=None):
             messagebox.showerror("Error", f"No se encontró información para '{pais}'.")
     except requests.exceptions.RequestException as e:
         messagebox.showerror("Error", f"No se pudo conectar a la API. {e}")
-
-# Función para mostrar la información del país en español en la interfaz
+Función para mostrar la información del país en español en la interfaz
 def mostrar_info_pais(info):
     nombre = info.get("translations", {}).get("spa", {}).get("common", "No disponible")
     capital = info.get("capital", ["No disponible"])[0]
@@ -80,14 +79,14 @@ def mostrar_info_pais(info):
     texto_resultado.config(state=tk.DISABLED)
     lista_sugerencias.pack_forget()  # Ocultar lista de sugerencias una vez seleccionado
 
-# Función para seleccionar un país de las sugerencias
+Función para seleccionar un país de las sugerencias
 def seleccionar_sugerencia(event):
     seleccion = lista_sugerencias.get(lista_sugerencias.curselection())
     entrada_pais.delete(0, tk.END)
     entrada_pais.insert(0, seleccion)
     buscar_pais(seleccion)
 
-# Configuración de la interfaz gráfica
+Configuración de la interfaz gráfica
 ventana = tk.Tk()
 ventana.title("Buscador de Información de Países")
 ventana.geometry("500x400")
@@ -102,7 +101,7 @@ entrada_pais.bind("<KeyRelease>", actualizar_sugerencias)  # Detectar cambios en
 boton_buscar = tk.Button(ventana, text="Buscar", command=buscar_pais, font=("Arial", 12), bg="lightblue")
 boton_buscar.pack(pady=10)
 
-# Lista desplegable para sugerencias
+Lista desplegable para sugerencias
 lista_sugerencias = tk.Listbox(ventana, font=("Arial", 10), height=5)
 lista_sugerencias.bind("<<ListboxSelect>>", seleccionar_sugerencia)
 
